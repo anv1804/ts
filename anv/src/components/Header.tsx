@@ -1,154 +1,61 @@
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import 'fontawesome-free/css/all.min.css'
+type Props = {}
 
-const navigation = [
-  { name: 'Home', href: '#', current: true },
-  { name: 'About', href: '#', current: false },
-  { name: 'Product', href: '#', current: false },
-  { name: 'Contact', href: '#', current: false }
-]
-
-function classNames(...classes: any) {
-  return classes.filter(Boolean).join(' ')
-}
-
-export default function Example() {
+const Header = (props: Props) => {
   return (
-    <Disclosure as='nav' className='bg-gray-800'>
-      {({ open }) => (
-        <>
-          <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>
-            <div className='relative flex h-16 items-center justify-between'>
-              <div className='absolute inset-y-0 left-0 flex items-center sm:hidden'>
-                {/* Mobile menu button*/}
-                <Disclosure.Button className='relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white'>
-                  <span className='absolute -inset-0.5' />
-                  <span className='sr-only'>Open main menu</span>
-                  {open ? (
-                    <XMarkIcon className='block h-6 w-6' aria-hidden='true' />
-                  ) : (
-                    <Bars3Icon className='block h-6 w-6' aria-hidden='true' />
-                  )}
-                </Disclosure.Button>
-              </div>
-              <div className='flex flex-1 items-center justify-center sm:items-stretch sm:justify-start'>
-                <div className='flex flex-shrink-0 items-center'>
-                  <img
-                    className='h-10 w-auto'
-                    src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500'
-                    alt='Your Company'
-                  />
-                </div>
-                <div className='hidden sm:ml-6 sm:block'>
-                  <div className='flex space-x-4'>
-                    {navigation.map((item) => (
-                      <a
-                        key={item.name}
-                        href={item.href}
-                        className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'rounded-md px-3 py-2 text-sm font-medium'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
+    <div>
+      <header className='py-4 shadow-sm bg-white'>
+        <div className='container flex items-center justify-between'>
+          <a href='index.html'>
+            <img src='../assets/images/logo.svg' alt='Logo' className='w-32' />
+          </a>
 
-              <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-                <button
-                  type='button'
-                  className='relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'
-                >
-                  <span className='absolute -inset-1.5' />
-                  <span className='sr-only'>View notifications</span>
-                  <BellIcon className='h-6 w-6' aria-hidden='true' />
-                </button>
-
-                {/* Profile dropdown */}
-                <Menu as='div' className='relative ml-3'>
-                  <div>
-                    <Menu.Button className='relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
-                      <span className='absolute -inset-1.5' />
-                      <span className='sr-only'>Open user menu</span>
-                      <img
-                        className='h-8 w-8 rounded-full'
-                        src='https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-                        alt=''
-                      />
-                    </Menu.Button>
-                  </div>
-                  <Transition
-                    as={Fragment}
-                    enter='transition ease-out duration-100'
-                    enterFrom='transform opacity-0 scale-95'
-                    enterTo='transform opacity-100 scale-100'
-                    leave='transition ease-in duration-75'
-                    leaveFrom='transform opacity-100 scale-100'
-                    leaveTo='transform opacity-0 scale-95'
-                  >
-                    <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href='#'
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Your Profile
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href='#'
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Settings
-                          </a>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <a
-                            href='#'
-                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                          >
-                            Sign out
-                          </a>
-                        )}
-                      </Menu.Item>
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-            </div>
+          <div className='w-full max-w-xl relative flex'>
+            <span className='absolute left-4 top-3 text-lg text-gray-400'>
+              <i className='fa-solid fa-magnifying-glass'></i>
+            </span>
+            <input
+              type='text'
+              name='search'
+              id='search'
+              className='w-full border border-primary border-r-0 pl-12 py-3 pr-3 rounded-l-md hidden md:flex focus:outline-none'
+              placeholder='search'
+            />
+            <button className='bg-primary border border-primary text-white px-8 rounded-r-md hover:bg-transparent hover:text-primary transition md:flex hidden'>
+              Search
+            </button>
           </div>
 
-          <Disclosure.Panel className='sm:hidden'>
-            <div className='space-y-1 px-2 pb-3 pt-2'>
-              {navigation.map((item) => (
-                <Disclosure.Button
-                  key={item.name}
-                  as='a'
-                  href={item.href}
-                  className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                    'block rounded-md px-3 py-2 text-base font-medium'
-                  )}
-                  aria-current={item.current ? 'page' : undefined}
-                >
-                  {item.name}
-                </Disclosure.Button>
-              ))}
-            </div>
-          </Disclosure.Panel>
-        </>
-      )}
-    </Disclosure>
+          <div className='flex items-center space-x-4'>
+            <a href='#' className='text-center text-gray-700 hover:text-primary transition relative'>
+              <div className='text-2xl'>
+                <i className='fa-regular fa-heart'></i>
+              </div>
+              <div className='text-xs leading-3'>Wishlist</div>
+              <div className='absolute right-0 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs'>
+                8
+              </div>
+            </a>
+            <a href='#' className='text-center text-gray-700 hover:text-primary transition relative'>
+              <div className='text-2xl'>
+                <i className='fa-solid fa-bag-shopping'></i>
+              </div>
+              <div className='text-xs leading-3'>Cart</div>
+              <div className='absolute -right-3 -top-1 w-5 h-5 rounded-full flex items-center justify-center bg-primary text-white text-xs'>
+                2
+              </div>
+            </a>
+            <a href='#' className='text-center text-gray-700 hover:text-primary transition relative'>
+              <div className='text-2xl'>
+                <i className='fa-regular fa-user'></i>
+              </div>
+              <div className='text-xs leading-3'>Account</div>
+            </a>
+          </div>
+        </div>
+      </header>
+    </div>
   )
 }
+
+export default Header

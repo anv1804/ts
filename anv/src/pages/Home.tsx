@@ -1,11 +1,7 @@
 import ProductList from '../components/ProductList.tsx'
 
 const Home = () => {
-  return (
-    <>
-      <ProductList />
-    </>
-  )
+  return <></>
 }
 
 export default Home
