@@ -1,4 +1,5 @@
 import 'fontawesome-free/css/all.min.css'
+import { Link } from 'react-router-dom'
 type Props = {}
 
 const Header = (props: Props) => {
@@ -6,9 +7,9 @@ const Header = (props: Props) => {
     <div>
       <header className='py-4 shadow-sm bg-white'>
         <div className='container flex items-center justify-between'>
-          <a href='index.html'>
+          <Link to='/' className='nav-link'>
             <img src='../assets/images/logo.svg' alt='Logo' className='w-32' />
-          </a>
+          </Link>
 
           <div className='w-full max-w-xl relative flex'>
             <span className='absolute left-4 top-3 text-lg text-gray-400'>
@@ -45,12 +46,15 @@ const Header = (props: Props) => {
                 2
               </div>
             </a>
-            <a href='#' className='text-center text-gray-700 hover:text-primary transition relative'>
+            <Link
+              to='/login'
+              className='nav-link text-gray-200 hover:text-white transition text-center text-gray-700 hover:text-primary transition relative'
+            >
               <div className='text-2xl'>
                 <i className='fa-regular fa-user'></i>
               </div>
               <div className='text-xs leading-3'>Account</div>
-            </a>
+            </Link>
           </div>
         </div>
       </header>
