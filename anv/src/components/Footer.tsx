@@ -1,113 +1,40 @@
-import React from 'react'
-
 const Footer = () => {
   return (
-    <div>
-      <footer className='bg-white pt-16 pb-12 border-t border-gray-100'>
-        <div className='container grid grid-cols-1 '>
-          <div className='col-span-1 space-y-4'>
-            <img src='assets/images/logo.svg' alt='logo' className='w-30' />
-            <div className='mr-2'>
-              <p className='text-gray-500'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, hic?</p>
-            </div>
-            <div className='flex space-x-5'>
-              <a href='#' className='text-gray-400 hover:text-gray-500'>
-                <i className='fa-brands fa-facebook-square'></i>
+    <>
+      <div className='bg-white rounded-lg shadow m-4 dark:bg-gray-800'>
+        <div className='w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between'>
+          <span className='text-sm text-gray-500 sm:text-center dark:text-gray-400'>
+            © 2023{' '}
+            <a href='https://flowbite.com/' className='hover:underline'>
+              Flowbite™
+            </a>
+            . All Rights Reserved.
+          </span>
+          <ul className='flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0'>
+            <li>
+              <a href='#' className='hover:underline me-4 md:me-6'>
+                About
               </a>
-              <a href='#' className='text-gray-400 hover:text-gray-500'>
-                <i className='fa-brands fa-instagram-square'></i>
+            </li>
+            <li>
+              <a href='#' className='hover:underline me-4 md:me-6'>
+                Privacy Policy
               </a>
-              <a href='#' className='text-gray-400 hover:text-gray-500'>
-                <i className='fa-brands fa-twitter-square'></i>
+            </li>
+            <li>
+              <a href='#' className='hover:underline me-4 md:me-6'>
+                Licensing
               </a>
-              <a href='#' className='text-gray-400 hover:text-gray-500'>
-                <i className='fa-brands fa-github-square'></i>
+            </li>
+            <li>
+              <a href='#' className='hover:underline'>
+                Contact
               </a>
-            </div>
-          </div>
-
-          <div className='col-span-2 grid grid-cols-2 gap-4'>
-            <div className='grid grid-cols-2 gap-4 md:gap-8'>
-              <div>
-                <h3 className='text-sm font-semibold text-gray-400 uppercase tracking-wider'>Solutions</h3>
-                <div className='mt-4 space-y-4'>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Marketing
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Analitycs
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Commerce
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Insights
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <h3 className='text-sm font-semibold text-gray-400 uppercase tracking-wider'>Support</h3>
-                <div className='mt-4 space-y-4'>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Pricing
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Guides
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    API Status
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div className='grid grid-cols-2 gap-8'>
-              <div>
-                <h3 className='text-sm font-semibold text-gray-400 uppercase tracking-wider'>Solutions</h3>
-                <div className='mt-4 space-y-4'>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Marketing
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Analitycs
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Commerce
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Insights
-                  </a>
-                </div>
-              </div>
-
-              <div>
-                <h3 className='text-sm font-semibold text-gray-400 uppercase tracking-wider'>Support</h3>
-                <div className='mt-4 space-y-4'>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Pricing
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    Guides
-                  </a>
-                  <a href='#' className='text-base text-gray-500 hover:text-gray-900 block'>
-                    API Status
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      <div className='bg-gray-800 py-4'>
-        <div className='container flex items-center justify-between'>
-          <p className='text-white'>&copy; TailCommerce - All Right Reserved</p>
-          <div>
-            <img src='assets/images/methods.png' alt='methods' className='h-5' />
-          </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 

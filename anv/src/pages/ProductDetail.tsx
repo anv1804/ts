@@ -1,489 +1,191 @@
+import instance from '@/apis'
+import { Product } from '@/common/Product'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { product } from '../common/Product'
-import instance from '@/apis'
 
-const ProductDetail = () => {
-  const params = useParams().id
-  const [products, setProducts] = useState<product[]>([])
+type Props = {}
+const ProductDetail = (props: Props) => {
+  const { id } = useParams()
+  const [product, setProduct] = useState<Product | null>(null)
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const { data } = await instance.get('http://localhost:3000/products/' + params)
-        console.log(data)
-        setProducts(data)
-      } catch (error) {
-        console.log(error)
-      }
+    const getProduct = async () => {
+      let { data } = await instance.get(`products/${id}`)
+      console.log(data)
+      setProduct(data)
     }
-    getProducts()
+    getProduct()
   }, [])
-  const dataProduct: any = products
-  const { id, title, description, price, discountPercentage, rating, stock, brand, category, thumbnail, images } =
-    dataProduct
   return (
-    <div style={{ paddingTop: '10px' }}>
-      <div className='container grid grid-cols-2 gap-6'>
-        <div>
-          <img src={thumbnail} alt='product' className='w-full' />
-          <div className='grid grid-cols-5 gap-4 mt-4'>
-            <img src={thumbnail} alt='product2' className='w-full cursor-pointer border border-primary' />
-            <img src={thumbnail} alt='product2' className='w-full cursor-pointer border' />
-            <img src={thumbnail} alt='product2' className='w-full cursor-pointer border' />
-            <img src={thumbnail} alt='product2' className='w-full cursor-pointer border' />
-            <img src={thumbnail} alt='product2' className='w-full cursor-pointer border' />
-          </div>
-        </div>
-
-        <div>
-          <h2 className='text-3xl font-medium uppercase mb-2'>{title}</h2>
-          <div className='flex items-center mb-4'>
-            <div className='flex gap-1 text-sm text-yellow-400'>
-              <span>
-                <i className='fa-solid fa-star'></i>
-              </span>
-              <span>
-                <i className='fa-solid fa-star'></i>
-              </span>
-              <span>
-                <i className='fa-solid fa-star'></i>
-              </span>
-              <span>
-                <i className='fa-solid fa-star'></i>
-              </span>
-              <span>
-                <i className='fa-solid fa-star'></i>
-              </span>
+    <>
+      <div className='font-[sans-serif]'>
+        <div className='p-6 lg:max-w-6xl max-w-2xl mx-auto'>
+          <div className='grid items-start grid-cols-1 lg:grid-cols-2 gap-8'>
+            <div className='w-full lg:sticky top-0 sm:flex gap-2'>
+              <div className='sm:space-y-3 w-16 max-sm:flex max-sm:mb-4 max-sm:gap-4'>
+                <img src={product?.images[0]} alt='Product1' className='w-full h-auto cursor-pointer outline' />
+                <img src={product?.images[1]} alt='Product2' className='w-full h-auto cursor-pointer' />
+                <img src={product?.images[2]} alt='Product3' className='w-full h-auto cursor-pointer' />
+                <img src={product?.images[3]} alt='Product4' className='w-full h-auto cursor-pointer' />
+              </div>
+              <img src={product?.thumbnail} alt='Product' className='w-4/5 rounded object-cover' />
             </div>
-            <div className='text-xs text-gray-500 ml-3'>(150 Reviews)</div>
-          </div>
-          <div className='space-y-2'>
-            <p className='text-gray-800 font-semibold space-x-2'>
-              <span>Availability: </span>
-              <span className='text-green-600'>In Stock</span>
-            </p>
-            <p className='space-x-2'>
-              <span className='text-gray-800 font-semibold'>Brand: </span>
-              <span className='text-gray-600'>Apex</span>
-            </p>
-            <p className='space-x-2'>
-              <span className='text-gray-800 font-semibold'>Category: </span>
-              <span className='text-gray-600'>{category}</span>
-            </p>
-            <p className='space-x-2'>
-              <span className='text-gray-800 font-semibold'>SKU: </span>
-              <span className='text-gray-600'>BE45VGRT</span>
-            </p>
-          </div>
-          <div className='flex items-baseline mb-1 space-x-2 font-roboto mt-4'>
-            <p className='text-xl text-primary font-semibold'>${price}</p>
-            <p className='text-base text-gray-400 line-through'>${price + 100}</p>
-          </div>
-
-          <p className='mt-4 text-gray-600'>{description}</p>
-
-          <div className='pt-4'>
-            <h3 className='text-sm text-gray-800 uppercase mb-1'>Size</h3>
-            <div className='flex items-center gap-2'>
-              <div className='size-selector'>
-                <input type='radio' name='size' id='size-xs' className='hidden' />
-                <label
-                  htmlFor='size-xs'
-                  className='text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600'
-                >
-                  XS
-                </label>
+            <div>
+              <h2 className='text-2xl font-extrabold text-gray-800'>{product?.title} </h2>
+              <div className='flex flex-wrap gap-4 mt-4'>
+                <p className='text-gray-800 text-xl font-bold'>${product?.price} </p>
+                <p className='text-gray-400 text-xl'>
+                  <span>${`${product?.price}`} </span> <span className='text-sm ml-1'>Tax included</span>
+                </p>
               </div>
-              <div className='size-selector'>
-                <input type='radio' name='size' id='size-sm' className='hidden' />
-                <label
-                  htmlFor='size-sm'
-                  className='text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600'
-                >
-                  S
-                </label>
+              <div className='flex space-x-2 mt-4'>
+                <svg className='w-5 fill-gray-800' viewBox='0 0 14 13' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                </svg>
+                <svg className='w-5 fill-gray-800' viewBox='0 0 14 13' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                </svg>
+                <svg className='w-5 fill-gray-800' viewBox='0 0 14 13' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                </svg>
+                <svg className='w-5 fill-gray-800' viewBox='0 0 14 13' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                </svg>
+                <svg className='w-5 fill-[#CED5D8]' viewBox='0 0 14 13' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                  <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                </svg>
               </div>
-              <div className='size-selector'>
-                <input type='radio' name='size' id='size-m' className='hidden' />
-                <label
-                  htmlFor='size-m'
-                  className='text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600'
+              <div className='mt-8'>
+                <h3 className='text-lg font-bold text-gray-800'>Sizes</h3>
+                <div className='flex flex-wrap gap-4 mt-4'>
+                  <button
+                    type='button'
+                    className='w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0'
+                  >
+                    SM
+                  </button>
+                  <button
+                    type='button'
+                    className='w-12 h-12 border-2 hover:border-gray-800 border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0'
+                  >
+                    MD
+                  </button>
+                  <button
+                    type='button'
+                    className='w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0'
+                  >
+                    LG
+                  </button>
+                  <button
+                    type='button'
+                    className='w-12 h-12 border-2 hover:border-gray-800 font-bold text-sm rounded-full flex items-center justify-center shrink-0'
+                  >
+                    XL
+                  </button>
+                </div>
+                <button
+                  type='button'
+                  className='w-full mt-4 px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white font-bold rounded'
                 >
-                  M
-                </label>
+                  Add to cart
+                </button>
               </div>
-              <div className='size-selector'>
-                <input type='radio' name='size' id='size-l' className='hidden' />
-                <label
-                  htmlFor='size-l'
-                  className='text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600'
-                >
-                  L
-                </label>
+              <div className='mt-8'>
+                <h3 className='text-lg font-bold text-gray-800'>About the item</h3>
+                <ul className='space-y-3 list-disc mt-4 pl-4 text-sm text-gray-800'>
+                  <li>{product?.description} </li>
+                </ul>
               </div>
-              <div className='size-selector'>
-                <input type='radio' name='size' id='size-xl' className='hidden' />
-                <label
-                  htmlFor='size-xl'
-                  className='text-xs border border-gray-200 rounded-sm h-6 w-6 flex items-center justify-center cursor-pointer shadow-sm text-gray-600'
+              <div className='mt-8 max-w-md'>
+                <h3 className='text-lg font-bold text-gray-800'>Reviews(10)</h3>
+                <div className='space-y-3 mt-4'>
+                  <div className='flex items-center'>
+                    <p className='text-sm text-gray-800 font-bold'>5.0</p>
+                    <svg
+                      className='w-5 fill-gray-800 ml-1'
+                      viewBox='0 0 14 13'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                    </svg>
+                    <div className='bg-gray-300 rounded w-full h-2 ml-3'>
+                      <div className='w-2/3 h-full rounded bg-gray-800' />
+                    </div>
+                    <p className='text-sm text-gray-800 font-bold ml-3'>66%</p>
+                  </div>
+                  <div className='flex items-center'>
+                    <p className='text-sm text-gray-800 font-bold'>4.0</p>
+                    <svg
+                      className='w-5 fill-gray-800 ml-1'
+                      viewBox='0 0 14 13'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                    </svg>
+                    <div className='bg-gray-300 rounded w-full h-2 ml-3'>
+                      <div className='w-1/3 h-full rounded bg-gray-800' />
+                    </div>
+                    <p className='text-sm text-gray-800 font-bold ml-3'>33%</p>
+                  </div>
+                  <div className='flex items-center'>
+                    <p className='text-sm text-gray-800 font-bold'>3.0</p>
+                    <svg
+                      className='w-5 fill-gray-800 ml-1'
+                      viewBox='0 0 14 13'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                    </svg>
+                    <div className='bg-gray-300 rounded w-full h-2 ml-3'>
+                      <div className='w-1/6 h-full rounded bg-gray-800' />
+                    </div>
+                    <p className='text-sm text-gray-800 font-bold ml-3'>16%</p>
+                  </div>
+                  <div className='flex items-center'>
+                    <p className='text-sm text-gray-800 font-bold'>2.0</p>
+                    <svg
+                      className='w-5 fill-gray-800 ml-1'
+                      viewBox='0 0 14 13'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                    </svg>
+                    <div className='bg-gray-300 rounded w-full h-2 ml-3'>
+                      <div className='w-1/12 h-full rounded bg-gray-800' />
+                    </div>
+                    <p className='text-sm text-gray-800 font-bold ml-3'>8%</p>
+                  </div>
+                  <div className='flex items-center'>
+                    <p className='text-sm text-gray-800 font-bold'>1.0</p>
+                    <svg
+                      className='w-5 fill-gray-800 ml-1'
+                      viewBox='0 0 14 13'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path d='M7 0L9.4687 3.60213L13.6574 4.83688L10.9944 8.29787L11.1145 12.6631L7 11.2L2.8855 12.6631L3.00556 8.29787L0.342604 4.83688L4.5313 3.60213L7 0Z' />
+                    </svg>
+                    <div className='bg-gray-300 rounded w-full h-2 ml-3'>
+                      <div className='w-[6%] h-full rounded bg-gray-800' />
+                    </div>
+                    <p className='text-sm text-gray-800 font-bold ml-3'>6%</p>
+                  </div>
+                </div>
+                <button
+                  type='button'
+                  className='w-full mt-8 px-4 py-2 bg-transparent border-2 border-gray-800 text-gray-800 font-bold rounded'
                 >
-                  XL
-                </label>
+                  Read all reviews
+                </button>
               </div>
             </div>
-          </div>
-
-          <div className='pt-4'>
-            <h3 className='text-xl text-gray-800 mb-3 uppercase font-medium'>Color</h3>
-            <div className='flex items-center gap-2'>
-              <div className='color-selector'>
-                <input type='radio' name='color' id='red' className='hidden' />
-                <label
-                  htmlFor='red'
-                  className='border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block'
-                  style={{ backgroundColor: '#fc3d57' }}
-                ></label>
-              </div>
-              <div className='color-selector'>
-                <input type='radio' name='color' id='black' className='hidden' />
-                <label
-                  htmlFor='black'
-                  className='border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block'
-                  style={{ backgroundColor: '#000' }}
-                ></label>
-              </div>
-              <div className='color-selector'>
-                <input type='radio' name='color' id='white' className='hidden' />
-                <label
-                  htmlFor='white'
-                  className='border border-gray-200 rounded-sm h-6 w-6  cursor-pointer shadow-sm block'
-                  style={{ backgroundColor: '#fff' }}
-                ></label>
-              </div>
-            </div>
-          </div>
-
-          <div className='mt-4'>
-            <h3 className='text-sm text-gray-800 uppercase mb-1'>Quantity</h3>
-            <div className='flex border border-gray-300 text-gray-600 divide-x divide-gray-300 w-max'>
-              <div className='h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none'>-</div>
-              <div className='h-8 w-8 text-base flex items-center justify-center'>4</div>
-              <div className='h-8 w-8 text-xl flex items-center justify-center cursor-pointer select-none'>+</div>
-            </div>
-          </div>
-
-          <div className='mt-6 flex gap-3 border-b border-gray-200 pb-5 pt-5'>
-            <a
-              href='#'
-              className='bg-primary border border-primary text-white px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:bg-transparent hover:text-primary transition'
-            >
-              <i className='fa-solid fa-bag-shopping'></i> Add to cart
-            </a>
-            <a
-              href='#'
-              className='border border-gray-300 text-gray-600 px-8 py-2 font-medium rounded uppercase flex items-center gap-2 hover:text-primary transition'
-            >
-              <i className='fa-solid fa-heart'></i> Wishlist
-            </a>
-          </div>
-
-          <div className='flex gap-3 mt-4'>
-            <a
-              href='#'
-              className='text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center'
-            >
-              <i className='fa-brands fa-facebook-f'></i>
-            </a>
-            <a
-              href='#'
-              className='text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center'
-            >
-              <i className='fa-brands fa-twitter'></i>
-            </a>
-            <a
-              href='#'
-              className='text-gray-400 hover:text-gray-500 h-8 w-8 rounded-full border border-gray-300 flex items-center justify-center'
-            >
-              <i className='fa-brands fa-instagram'></i>
-            </a>
           </div>
         </div>
       </div>
-      <div className='container pb-16'>
-        <h3 className='border-b border-gray-200 font-roboto text-gray-800 pb-3 font-medium'>Product details</h3>
-        <div className='w-3/5 pt-6'>
-          <div className='text-gray-600'>
-            <p>{description}</p>
-            <p>{description}</p>
-            <p>{description}</p>
-          </div>
-
-          <table className='table-auto border-collapse w-full text-left text-gray-600 text-sm mt-6'>
-            <tr>
-              <th className='py-2 px-4 border border-gray-300 w-40 font-medium'>Color</th>
-              <th className='py-2 px-4 border border-gray-300 '>Blank, Brown, Red</th>
-            </tr>
-            <tr>
-              <th className='py-2 px-4 border border-gray-300 w-40 font-medium'>Material</th>
-              <th className='py-2 px-4 border border-gray-300 '>Latex</th>
-            </tr>
-            <tr>
-              <th className='py-2 px-4 border border-gray-300 w-40 font-medium'>Weight</th>
-              <th className='py-2 px-4 border border-gray-300 '>55kg</th>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div className='container pb-16'>
-        <h2 className='text-2xl font-medium text-gray-800 uppercase mb-6'>Related products</h2>
-        <div className='grid grid-cols-4 gap-6'>
-          <div className='bg-white shadow rounded overflow-hidden group'>
-            <div className='relative'>
-              <img src='../assets/images/products/product1.jpg' alt='product 1' className='w-full' />
-              <div
-                className='absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition'
-              >
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='view product'
-                >
-                  <i className='fa-solid fa-magnifying-glass'></i>
-                </a>
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='add to wishlist'
-                >
-                  <i className='fa-solid fa-heart'></i>
-                </a>
-              </div>
-            </div>
-            <div className='pt-4 pb-3 px-4'>
-              <a href='#'>
-                <h4 className='uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition'>
-                  Guyer Chair
-                </h4>
-              </a>
-              <div className='flex items-baseline mb-1 space-x-2'>
-                <p className='text-xl text-primary font-semibold'>$45.00</p>
-                <p className='text-sm text-gray-400 line-through'>$55.90</p>
-              </div>
-              <div className='flex items-center'>
-                <div className='flex gap-1 text-sm text-yellow-400'>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                </div>
-                <div className='text-xs text-gray-500 ml-3'>(150)</div>
-              </div>
-            </div>
-            <a
-              href='#'
-              className='block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition'
-            >
-              Add to cart
-            </a>
-          </div>
-          <div className='bg-white shadow rounded overflow-hidden group'>
-            <div className='relative'>
-              <img src='../assets/images/products/product4.jpg' alt='product 1' className='w-full' />
-              <div
-                className='absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition'
-              >
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='view product'
-                >
-                  <i className='fa-solid fa-magnifying-glass'></i>
-                </a>
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='add to wishlist'
-                >
-                  <i className='fa-solid fa-heart'></i>
-                </a>
-              </div>
-            </div>
-            <div className='pt-4 pb-3 px-4'>
-              <a href='#'>
-                <h4 className='uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition'>
-                  Bed King Size
-                </h4>
-              </a>
-              <div className='flex items-baseline mb-1 space-x-2'>
-                <p className='text-xl text-primary font-semibold'>$45.00</p>
-                <p className='text-sm text-gray-400 line-through'>$55.90</p>
-              </div>
-              <div className='flex items-center'>
-                <div className='flex gap-1 text-sm text-yellow-400'>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                </div>
-                <div className='text-xs text-gray-500 ml-3'>(150)</div>
-              </div>
-            </div>
-            <a
-              href='#'
-              className='block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition'
-            >
-              Add to cart
-            </a>
-          </div>
-          <div className='bg-white shadow rounded overflow-hidden group'>
-            <div className='relative'>
-              <img src='../assets/images/products/product2.jpg' alt='product 1' className='w-full' />
-              <div
-                className='absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition'
-              >
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='view product'
-                >
-                  <i className='fa-solid fa-magnifying-glass'></i>
-                </a>
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='add to wishlist'
-                >
-                  <i className='fa-solid fa-heart'></i>
-                </a>
-              </div>
-            </div>
-            <div className='pt-4 pb-3 px-4'>
-              <a href='#'>
-                <h4 className='uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition'>
-                  Couple Sofa
-                </h4>
-              </a>
-              <div className='flex items-baseline mb-1 space-x-2'>
-                <p className='text-xl text-primary font-semibold'>$45.00</p>
-                <p className='text-sm text-gray-400 line-through'>$55.90</p>
-              </div>
-              <div className='flex items-center'>
-                <div className='flex gap-1 text-sm text-yellow-400'>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                </div>
-                <div className='text-xs text-gray-500 ml-3'>(150)</div>
-              </div>
-            </div>
-            <a
-              href='#'
-              className='block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition'
-            >
-              Add to cart
-            </a>
-          </div>
-          <div className='bg-white shadow rounded overflow-hidden group'>
-            <div className='relative'>
-              <img src='../assets/images/products/product3.jpg' alt='product 1' className='w-full' />
-              <div
-                className='absolute inset-0 bg-black bg-opacity-40 flex items-center 
-                    justify-center gap-2 opacity-0 group-hover:opacity-100 transition'
-              >
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='view product'
-                >
-                  <i className='fa-solid fa-magnifying-glass'></i>
-                </a>
-                <a
-                  href='#'
-                  className='text-white text-lg w-9 h-8 rounded-full bg-primary flex items-center justify-center hover:bg-gray-800 transition'
-                  title='add to wishlist'
-                >
-                  <i className='fa-solid fa-heart'></i>
-                </a>
-              </div>
-            </div>
-            <div className='pt-4 pb-3 px-4'>
-              <a href='#'>
-                <h4 className='uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition'>
-                  Mattrass X
-                </h4>
-              </a>
-              <div className='flex items-baseline mb-1 space-x-2'>
-                <p className='text-xl text-primary font-semibold'>$45.00</p>
-                <p className='text-sm text-gray-400 line-through'>$55.90</p>
-              </div>
-              <div className='flex items-center'>
-                <div className='flex gap-1 text-sm text-yellow-400'>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                  <span>
-                    <i className='fa-solid fa-star'></i>
-                  </span>
-                </div>
-                <div className='text-xs text-gray-500 ml-3'>(150)</div>
-              </div>
-            </div>
-            <a
-              href='#'
-              className='block w-full py-1 text-center text-white bg-primary border border-primary rounded-b hover:bg-transparent hover:text-primary transition'
-            >
-              Add to cart
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   )
 }
 

@@ -1,9 +1,7 @@
 import React from 'react'
 
-type Props = {}
-
-const Notfound = (props: Props) => {
-  return <div>Notfound</div>
+const Notfound = () => {
+  return <div>404 notfound</div>
 }
 
 export default Notfound
