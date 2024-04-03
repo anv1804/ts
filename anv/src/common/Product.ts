@@ -1,6 +1,5 @@
 export type Product = {
-  map(arg0: (product: any) => import('react/jsx-runtime').JSX.Element): import('react').ReactNode
-  id: number
+  id: number | string
   title: string
   description: string
   price: number
